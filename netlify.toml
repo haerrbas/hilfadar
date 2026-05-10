@@ -1,5 +1,5 @@
 [build]
-  command = "mkdir -p .svelte-kit/output && npm run build"
+  command = "mkdir -p .svelte-kit/output/client && npm run build"
   publish = ".svelte-kit/output/client"
 
 [build.environment]
