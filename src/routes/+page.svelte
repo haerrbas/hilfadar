@@ -10,6 +10,7 @@
   <div class="actions">
     <a href="/angebote" class="btn primary">Hilfe suchen</a>
     <a href="/angebote/neu" class="btn secondary">Hilfe anbieten</a>
+    <a href="/profil" class="btn secondary">👤 Profile</a>
   </div>
 </main>
 
