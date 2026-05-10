@@ -1,0 +1,18 @@
+diff --git a/node_modules/@sveltejs/adapter-netlify/index.js b/node_modules/@sveltejs/adapter-netlify/index.js
+index a405702..3d0c2f5 100644
+--- a/node_modules/@sveltejs/adapter-netlify/index.js
++++ b/node_modules/@sveltejs/adapter-netlify/index.js
+@@ -1,4 +1,4 @@
+-import { appendFileSync, existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
++import { appendFileSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+ import { dirname, join, resolve, posix } from 'node:path';
+ import { fileURLToPath } from 'node:url';
+ import { builtinModules } from 'node:module';
+@@ -85,6 +85,7 @@ export default function ({ split = false, edge = edge_set_in_env_var } = {}) {
+ 			builder.log.minor('Writing custom headers...');
+ 			const headers_file = join(publish, '_headers');
+ 			builder.copy('_headers', headers_file);
++			mkdirSync(dirname(headers_file), { recursive: true });
+ 			appendFileSync(
+ 				headers_file,
+ 				`\n\n/${builder.getAppPath()}/immutable/*\n  cache-control: public\n  cache-control: immutable\n  cache-control: max-age=31536000\n`
