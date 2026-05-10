@@ -1,5 +1,5 @@
 [build]
-  command = "node scripts/create-headers.js && npm run build"
+  command = "npm run build"
   publish = ".svelte-kit/output/client"
 
 [build.environment]
