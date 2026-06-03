@@ -9,7 +9,16 @@
 	let suchStatus = $state('');
 	let timers = [];
 
+	let loeschenAngebot = $state(null);
+	let loescheLaeuft = $state(false);
+	let loescheFehler = $state('');
+
 	onMount(async () => {
+		await ladeAngebote();
+	});
+
+	async function ladeAngebote() {
+		laden = true;
 		try {
 			const res = await fetch('/api/angebote');
 			if (!res.ok) throw new Error();
@@ -19,7 +28,7 @@
 		} finally {
 			laden = false;
 		}
-	});
+	}
 
 	function hilfeAnfragen(angebot) {
 		gewaehltesAngebot = angebot;
@@ -59,6 +68,36 @@
 		erfolgSichtbar = false;
 		gewaehltesAngebot = null;
 	}
+
+	function loeschenAnfragen(angebot) {
+		loeschenAngebot = angebot;
+		loescheFehler = '';
+	}
+
+	function loeschenAbbrechen() {
+		loeschenAngebot = null;
+		loescheFehler = '';
+	}
+
+	async function loeschenBestaetigen() {
+		if (!loeschenAngebot) return;
+		loescheLaeuft = true;
+		loescheFehler = '';
+		try {
+			const res = await fetch('/api/angebote', {
+				method: 'DELETE',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ id: loeschenAngebot._id })
+			});
+			if (!res.ok) throw new Error('Löschen fehlgeschlagen');
+			angebote = angebote.filter((a) => a._id !== loeschenAngebot._id);
+			loeschenAngebot = null;
+		} catch (e) {
+			loescheFehler = (e instanceof Error ? e.message : 'Fehler beim Löschen');
+		} finally {
+			loescheLaeuft = false;
+		}
+	}
 </script>
 
 <main>
@@ -78,7 +117,17 @@
 				<div class="karte">
 					<div class="kopf">
 						<span class="nutzer">👤 {angebot.nutzer}</span>
-						<span class="karma">⭐ {angebot.karma ?? 0} Karma</span>
+						<div class="kopf-rechts">
+							<span class="karma">⭐ {angebot.karma ?? 0} Karma</span>
+							<button
+								class="loeschen-btn"
+								aria-label="Angebot löschen"
+								title="Angebot löschen"
+								onclick={() => loeschenAnfragen(angebot)}
+							>
+								🗑
+							</button>
+						</div>
 					</div>
 					<h2>{angebot.titel}</h2>
 					{#if angebot.beschreibung}
@@ -145,6 +194,50 @@
 			</div>
 		</div>
 	{/if}
+
+	{#if loeschenAngebot}
+		<div
+			class="popup-overlay"
+			role="button"
+			tabindex="0"
+			onclick={loeschenAbbrechen}
+			onkeydown={(e) => e.key === 'Escape' && loeschenAbbrechen()}
+		>
+			<div
+				class="popup popup-loeschen"
+				role="dialog"
+				aria-modal="true"
+				onclick={(e) => e.stopPropagation()}
+				onkeydown={(e) => e.stopPropagation()}
+			>
+				<div class="popup-icon">🗑</div>
+				<h2>Angebot löschen?</h2>
+				<p>
+					Möchtest du das Angebot <strong>„{loeschenAngebot.titel}"</strong> wirklich entfernen? Diese
+					Aktion kann nicht rückgängig gemacht werden.
+				</p>
+				{#if loescheFehler}
+					<p class="fehler">⚠️ {loescheFehler}</p>
+				{/if}
+				<div class="popup-aktionen">
+					<button
+						class="popup-cancel"
+						onclick={loeschenAbbrechen}
+						disabled={loescheLaeuft}
+					>
+						Abbrechen
+					</button>
+					<button
+						class="popup-delete"
+						onclick={loeschenBestaetigen}
+						disabled={loescheLaeuft}
+					>
+						{loescheLaeuft ? 'Wird gelöscht...' : 'Ja, löschen'}
+					</button>
+				</div>
+			</div>
+		</div>
+	{/if}
 </main>
 
 <style>
@@ -195,9 +288,15 @@
 	.kopf {
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 		margin-bottom: 0.5rem;
 		color: #666;
 		font-size: 0.9rem;
+	}
+	.kopf-rechts {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
 	}
 	h2 {
 		margin: 0.3rem 0 0.5rem;
@@ -238,6 +337,22 @@
 	.karma {
 		color: #f59e0b;
 	}
+	.loeschen-btn {
+		background: transparent;
+		border: 1px solid transparent;
+		padding: 0.2rem 0.4rem;
+		border-radius: 6px;
+		cursor: pointer;
+		font-size: 1rem;
+		line-height: 1;
+		opacity: 0.55;
+		transition: all 0.15s;
+	}
+	.loeschen-btn:hover {
+		opacity: 1;
+		background: #fef2f2;
+		border-color: #fecaca;
+	}
 	.popup-overlay {
 		position: fixed;
 		inset: 0;
@@ -265,6 +380,9 @@
 		margin: 0.5rem 0 1rem;
 		color: #4f46e5;
 	}
+	.popup-loeschen h2 {
+		color: #b91c1c;
+	}
 	.popup p {
 		margin: 0 0 1.5rem;
 		color: #444;
@@ -272,9 +390,10 @@
 		line-height: 1.4;
 	}
 	.popup-ok,
-	.popup-cancel {
+	.popup-cancel,
+	.popup-delete {
 		border: none;
-		padding: 0.6rem 2rem;
+		padding: 0.6rem 1.5rem;
 		border-radius: 8px;
 		cursor: pointer;
 		font-size: 1rem;
@@ -286,6 +405,31 @@
 	.popup-cancel {
 		background: #e5e7eb;
 		color: #444;
+	}
+	.popup-delete {
+		background: #b91c1c;
+		color: white;
+	}
+	.popup-delete:hover:not(:disabled) {
+		background: #991b1b;
+	}
+	.popup-delete:disabled,
+	.popup-cancel:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
+	.popup-aktionen {
+		display: flex;
+		gap: 0.6rem;
+		justify-content: center;
+	}
+	.fehler {
+		background: #fef2f2;
+		color: #b91c1c;
+		padding: 0.6rem 1rem;
+		border-radius: 8px;
+		margin: 0 0 1rem !important;
+		font-size: 0.9rem;
 	}
 	.popup-suche .spinner {
 		width: 3.5rem;
