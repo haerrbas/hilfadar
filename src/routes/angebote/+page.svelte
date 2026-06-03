@@ -3,12 +3,21 @@
 
 	let angebote = $state([]);
 	let laden = $state(true);
+	let popupSichtbar = $state(false);
 
 	onMount(async () => {
 		const res = await fetch('/api/angebote');
 		angebote = await res.json();
 		laden = false;
 	});
+
+	function hilfeAnfragen() {
+		popupSichtbar = true;
+	}
+
+	function popupSchliessen() {
+		popupSichtbar = false;
+	}
 </script>
 
 <main>
@@ -36,10 +45,33 @@
 						<span class="tag">{skill}</span>
 					{/each}
 				</div>
-				<button class="anfragen">Hilfe anfragen</button>
+				<button class="anfragen" onclick={hilfeAnfragen}>Hilfe anfragen</button>
 			</div>
 		{/each}
 	</div>
+
+	{#if popupSichtbar}
+		<div
+			class="popup-overlay"
+			role="button"
+			tabindex="0"
+			onclick={popupSchliessen}
+			onkeydown={(e) => e.key === 'Escape' && popupSchliessen()}
+		>
+			<div
+				class="popup"
+				role="dialog"
+				aria-modal="true"
+				onclick={(e) => e.stopPropagation()}
+				onkeydown={(e) => e.stopPropagation()}
+			>
+				<div class="popup-icon">✅</div>
+				<h2>Anfrage gesendet</h2>
+				<p>Helfer wurde informiert und wird in Kürze bei dir sein.</p>
+				<button class="popup-ok" onclick={popupSchliessen}>OK</button>
+			</div>
+		</div>
+	{/if}
 </main>
 
 <style>
@@ -111,5 +143,47 @@
 	}
 	.karma {
 		color: #f59e0b;
+	}
+	.popup-overlay {
+		position: fixed;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.5);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 1000;
+		padding: 1rem;
+	}
+	.popup {
+		background: white;
+		border-radius: 16px;
+		padding: 2rem;
+		max-width: 90%;
+		width: 380px;
+		text-align: center;
+		box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+	}
+	.popup-icon {
+		font-size: 3rem;
+		margin-bottom: 0.5rem;
+	}
+	.popup h2 {
+		margin: 0.5rem 0 1rem;
+		color: #4f46e5;
+	}
+	.popup p {
+		margin: 0 0 1.5rem;
+		color: #444;
+		font-size: 1rem;
+		line-height: 1.4;
+	}
+	.popup-ok {
+		background: #4f46e5;
+		color: white;
+		border: none;
+		padding: 0.6rem 2rem;
+		border-radius: 8px;
+		cursor: pointer;
+		font-size: 1rem;
 	}
 </style>
