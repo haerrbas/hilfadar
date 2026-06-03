@@ -130,14 +130,43 @@ Die Durchführung erfolgte phasenbasiert (Understand/Define → Sketch → Decid
   > Falls eine dieser Verbesserungen bereits im Prototyp umgesetzt wurde: in Kapitel 4 dokumentieren.
 
 ## 4. Erweiterungen [Optional]
-> **Hinweis:** Jede Erweiterung ist separat nach dem folgenden Schema zu beschreiben.
-> TODO: Nur ausfüllen, wenn du über den Mindestumfang hinausgegangen bist. Andernfalls dieses Kapitel leer lassen oder entfernen.
+> **Hinweis:** Jede Erweiterung ist separat nach dem folgenden Schema beschrieben.
 
-### _[4.x Kurzbeschreibung / Titel]_
-- **Beschreibung & Nutzen:** _[…]_
-- **Wo umgesetzt:** _[Frontend / Backend / Datenbank]_
-- **Referenz:** _[Screenshot/Kapitel]_
-- **Aus Evaluation abgeleitet?:** _[Ja/Nein – falls ja, welches Issue/Finding aus 3.5]_
+### 4.1 Formular zum Aufgeben neuer Angebote (Give-Flow)
+- **Beschreibung & Nutzen:** Ein vollständiges Formular auf `/angebote/neu` ermöglicht es Anbieter:innen, ein neues Hilfsangebot mit Titel, Beschreibung, Skills (Multi-Select-Chips für 8 Standard-Kategorien + Custom-Skill-Eingabe) und Verfügbarkeit zu erstellen. Vor der Umsetzung war die Route lediglich eine weitere Listenansicht – Nutzer:innen konnten **kein** Angebot aufgeben. Mit Pflichtfeld-Validierung, Loading-State („Wird gespeichert …") und Erfolgs-Popup („🎉 Angebot veröffentlicht") ist der Give-Flow nun End-to-End nutzbar; das Angebot landet anschliessend persistent in der MongoDB und erscheint direkt in der Übersicht.
+- **Wo umgesetzt:** Frontend (`src/routes/angebote/neu/+page.svelte`, Svelte 5 mit `$state`-Runes) + bestehende Backend-Route (`src/routes/api/angebote/+server.ts`, POST → MongoDB)
+- **Referenz:** Commit `ae1aa10` „feat: Implement form for creating new offers on /angebote/neu"; Screenshot in 3.4.1
+- **Aus Evaluation abgeleitet?:** Ja – beide Testpersonen (Sandro, Kanita) hatten in 3.5 angemerkt, dass die App ohne diesen Flow nicht alltagstauglich ist; das Aufgeben neuer Angebote war eine Lücke gegenüber dem Mockup aus 3.2.
+
+### 4.2 „Searching for …"-Screen mit dreistufigem Status (Validate-Prio 1)
+- **Beschreibung & Nutzen:** Nach Klick auf „Hilfe anfragen" erscheint ein modaler Such-Screen mit rotierendem Spinner und einem Status-Text, der über drei Phasen wechselt: „Suche nach passendem Helfer in deiner Nähe…" → „{Nutzer:in} wird kontaktiert…" → „Anfrage wird übermittelt…". Erst danach öffnet sich die Erfolgs-Bestätigung. Die Wartezeit (~3.5 s) wird so erklärt und die Anfrage fühlt sich nicht „magisch" an – die App kommuniziert sichtbar, was gerade passiert. Ein „Abbrechen"-Button erlaubt jederzeit den Rückzug.
+- **Wo umgesetzt:** Frontend (`src/routes/angebote/+page.svelte`, CSS-Keyframe-Animation `@keyframes drehen` für den Spinner, JavaScript-Timer mit sauberem Cleanup via `clearTimeout`)
+- **Referenz:** Commit `81d28f2` „feat: Show description+availability and add searching state"; Screenshot in 3.4.1
+- **Aus Evaluation abgeleitet?:** **Ja – Priorität 1 aus 3.5 (beide Testpersonen).** Sandro: „Es war unklar, was nach dem Klick passiert – mir fehlte der ‚Searching for'-Screen aus dem Mockup." Kanita: „Würde gerne sehen, dass die App wirklich sucht – sonst wirkt es ungewollt schnell."
+
+### 4.3 Bottom-Navigation (Need / Give / Profile)
+- **Beschreibung & Nutzen:** Eine fixierte Tab-Bar am unteren Bildschirmrand bietet konsistente Navigation zwischen den drei Kern-Routen: 📋 Need (`/angebote`), ➕ Give (`/angebote/neu`), 👤 Profile (`/profil`). Der aktuell aktive Tab wird automatisch hervorgehoben (lila Schrift, fett) – realisiert über das reaktive `page.url.pathname` aus `$app/state`. So entspricht die App dem mobilen Bedienparadigma aus dem ursprünglichen Sketch und macht das umständliche Zurück-zur-Startseite-Klicken überflüssig. iOS-Safe-Area wird via `env(safe-area-inset-bottom)` respektiert.
+- **Wo umgesetzt:** Frontend (`src/routes/+layout.svelte`, global für alle Routen; `position: fixed`)
+- **Referenz:** Commit `31439cf` „feat: Add bottom navigation (Need/Give/Profile) in layout"; Screenshot in 3.4.1
+- **Aus Evaluation abgeleitet?:** Indirekt – die Bottom-Nav stammt aus dem ursprünglichen Sketch (Kap. 3.2) und war im Prototyp bisher nicht umgesetzt; sie macht die App mobile-tauglich und entspricht den Erwartungen einer modernen Smartphone-App.
+
+### 4.4 Bestätigungs-Popup nach Hilfe-Anfrage
+- **Beschreibung & Nutzen:** Modaler Dialog mit ✅-Icon, Headline „Anfrage gesendet" und Bestätigungstext „Helfer wurde informiert und wird in Kürze bei dir sein.". Schliessbar via OK-Button, Klick aufs dunkle Overlay oder Escape-Taste. Mit `role="dialog"`, `aria-modal="true"` und `tabindex` accessibility-freundlich umgesetzt. Verschiebt die Bestätigung von „nichts passiert" zu sichtbarem, sofortigem Feedback.
+- **Wo umgesetzt:** Frontend (`src/routes/angebote/+page.svelte`)
+- **Referenz:** Commit `f3ed881` „Implement help request popup in Angebote page" (initial), verfeinert in `81d28f2`; Screenshot in 3.4.1
+- **Aus Evaluation abgeleitet?:** Ja – direkt verbunden mit Validate-Finding Prio 1 (s. 4.2); das Popup ist der letzte Schritt nach dem Searching-State und gibt der Anfrage einen klaren Abschluss.
+
+### 4.5 Beschreibung & Verfügbarkeit in der Angebotsliste
+- **Beschreibung & Nutzen:** Karten in der Übersicht (`/angebote`) zeigen jetzt zusätzlich zum Titel und Skill-Chip auch die Beschreibung (was genau wird angeboten?) und die Verfügbarkeit mit ⏰-Icon (z. B. „morgen", „Samstag 14-17 Uhr"). Bisher waren diese Felder zwar in der MongoDB gespeichert, wurden aber nicht angezeigt – Nutzer:innen mussten raten, was sich hinter einem Titel verbirgt. Headline und Subtitle („Hilfsangebote in deiner Nähe – Schau, wer in deiner Nachbarschaft helfen möchte.") geben der Liste zusätzlich Kontext.
+- **Wo umgesetzt:** Frontend (`src/routes/angebote/+page.svelte`)
+- **Referenz:** Commit `81d28f2` „feat: Show description+availability and add searching state"
+- **Aus Evaluation abgeleitet?:** Indirekt – beide Testpersonen wünschten sich „mehr Kontext zu einzelnen Angeboten" (3.5 Sammlung Erkenntnisse).
+
+### 4.6 Echtes MongoDB-Backend mit REST-API
+- **Beschreibung & Nutzen:** Statt mit Mock-Daten kommunizieren Frontend und Server über SvelteKit-API-Routes mit einer MongoDB-Atlas-Datenbank. Angebote werden via `POST /api/angebote` persistiert und via `GET /api/angebote` (sortiert nach `erstellt: -1`) geladen; Benutzerprofile haben eine eigene API unter `/api/benutzer`. Mongoose dient als ODM, die Models liegen in `src/lib/models/`. Damit ist die App eine vollwertige Multi-User-Anwendung statt eines reinen clientseitigen Prototyps – Daten überleben Reloads, sind über Geräte hinweg sichtbar und entsprechen einer produktionsnahen Architektur.
+- **Wo umgesetzt:** Backend (`src/routes/api/angebote/+server.ts`, `src/routes/api/benutzer/+server.ts`) und Datenbank (MongoDB Atlas, Mongoose-Models)
+- **Referenz:** Commit `cbf1e75` „feat: Übersichtsseite lädt echte Daten aus MongoDB"
+- **Aus Evaluation abgeleitet?:** Nein – konzeptionelle Erweiterung über den Mindestumfang hinaus; macht aus dem Prototyp eine echte App.
 
 ## 5. Projektorganisation [Optional]
 - **Repository & Struktur:** https://github.com/haerrbas/hilfadar – aktuell **37 Commits** im `main`-Branch. Wichtigste Ordner/Dateien: `src/` (SvelteKit-Quellcode, u. a. Routen für Need/Give und Benutzerprofile), `static/` (statische Assets), `scripts/` (Build-/Patch-Skripte für den Netlify-Adapter), `patches/` (Patches für Headers/Functions-Config), `.vscode/`, `netlify.toml`, `svelte.config.js`, `vite.config.ts`, `tsconfig.json`, `package.json`/`package-lock.json`. Sprachen laut GitHub: Svelte 73.6 %, TypeScript 18.9 %, JavaScript 5.5 %, HTML 2.0 %.
