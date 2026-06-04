@@ -108,7 +108,15 @@ Die Durchführung erfolgte phasenbasiert (Understand/Define, Sketch, Decide, Pro
   - **Vertrauensaufbau über Name/Avatar/Rating** statt anonymer Anfrage.
   - **Transparente Statusmeldungen** zur Reduktion von Unsicherheit im Wartezustand.
 
-> **Noch einzufügen:** Pro genanntem Screen ein Screenshot der **fertigen App** (nicht des Mockups) mit kurzer Erläuterung. Laut Bewertungsraster sind «Screenshots inkl. Beschreibungen der fertigen App» Pflicht.
+<img width="491" height="188" alt="image" src="https://github.com/user-attachments/assets/397d0d7b-8567-4512-ac5d-640ec4624526" />
+<img width="551" height="702" alt="image" src="https://github.com/user-attachments/assets/9e7ce652-fec8-4788-8c0a-1774aca206bf" />
+<img width="374" height="245" alt="image" src="https://github.com/user-attachments/assets/9a418165-c9d6-4f5d-8325-984fe6173849" />
+<img width="355" height="241" alt="image" src="https://github.com/user-attachments/assets/41dd3b21-948c-4cf8-963d-f64d8c1c861e" />
+<img width="361" height="224" alt="image" src="https://github.com/user-attachments/assets/9e7e284a-94ce-42d4-935b-8318080a0d7c" />
+
+
+
+
 
 #### 3.4.2 Umsetzung (Technik)
 
