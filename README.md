@@ -226,8 +226,6 @@ Die folgende Deklaration ist verpflichtend und beschreibt den Einsatz von KI im 
 - **Zweck & Umfang:** KI wurde eingesetzt, um aus den eigenen Projektartefakten (Skizzen, Designentscheide, Workflows, Test-Findings) einen strukturierten Dokumentationsentwurf zu erstellen.
 - **Eigene Leistung (Abgrenzung):** Konzept, Problemdefinition, Skizzen, Designentscheide, Workflows, Mockup, Implementierung und die Durchführung/Auswertung des Usability-Tests sind eigenständig erarbeitet. Die inhaltlichen Aussagen wurden geprüft und verantwortet.
 
-> **Noch zu prüfen/ergänzen:** Falls im Projekt weitere KI-Tools genutzt wurden (z. B. GitHub Copilot oder Claude/ChatGPT für Code, Tests oder Refactoring), hier mit Art und Umfang ergänzen und kennzeichnen, welche Teile (ganz/teilweise) KI-unterstützt entstanden sind.
-
 ### 6.2 Prompt-Vorgehen
 
 Die Doku wurde erstellt, indem die eigenen Artefakte (PDFs der Abgaben, Skizzen, Test-Notizen) als Kontext bereitgestellt und die KI angewiesen wurde, **strikt entlang der vorgegebenen ZHAW-Vorlage** zu strukturieren, ohne Inhalte zu erfinden. Nicht belegbare Angaben (Testkennzahlen) wurden bewusst als offene Punkte markiert statt frei generiert. Anschliessend wurden die Texte fachlich geprüft und angepasst.
@@ -248,8 +246,6 @@ Die Doku wurde erstellt, indem die eigenen Artefakte (PDFs der Abgaben, Skizzen,
 - **Rohdaten / Auswertung:** Ausgefüllte Testleiterdokumente vom 20.05.2026 (Prototyp v1.0):
   - [Hilfadar_Usability_Test-Sandro.docx](docs/usability-test/Hilfadar_Usability_Test-Sandro.docx)
   - [Hilfadar_Usability_Test-Kanita.docx](docs/usability-test/Hilfadar_Usability_Test-Kanita.docx)
-
-> **Noch einzufügen:** Lizenzhinweise zu verwendeten Icons / Schriften / Assets ergänzen.
 
 ## 8. Selbst-Check: Erfüllung der Vorgaben
 
