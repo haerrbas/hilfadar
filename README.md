@@ -90,9 +90,6 @@ Die Durchführung erfolgte phasenbasiert (Understand/Define, Sketch, Decide, Pro
   
 
 
-
-> **Noch einzufügen:** 2–3 Screenshots der wichtigsten Mockup-Screens (Need-Einstieg, Match-Screen, Order-done) mit je einer kurzen Bildunterschrift.
-
 ### 3.4 Prototype
 
 #### 3.4.1 Entwurf (Design)
