@@ -81,6 +81,8 @@ Die Durchführung erfolgte phasenbasiert (Understand/Define, Sketch, Decide, Pro
   - **Give:** Kategorie/Skills wählen, auf Match warten, Anfrage annehmen/ablehnen, zur wartenden Person navigieren, Abschluss bestätigen.
   - Beide Journeys treffen sich im **gemeinsamen Bestätigungsschritt** und enden im erledigten Auftrag.
 - **Mockup:** Interaktiver Figma-Prototyp der gewählten Lösung: <https://www.figma.com/proto/b8ncFxcTipBZwTg0Qd4Zen/Helpadar?node-id=1-3265&starting-point-node-id=1%3A3265>
+
+  
   <img width="298" height="625" alt="image" src="https://github.com/user-attachments/assets/2d37cc5c-2739-46ed-9059-f9498dfb43f2" />
   <img width="296" height="624" alt="image" src="https://github.com/user-attachments/assets/47bd6f0a-ac3d-43ba-adea-81f7e0ee138e" />
   <img width="293" height="620" alt="image" src="https://github.com/user-attachments/assets/91033794-2250-4145-ad44-da796bdb8d29" />
