@@ -155,7 +155,7 @@ Die Durchführung erfolgte phasenbasiert (Understand/Define, Sketch, Decide, Pro
   - **Unklar:** Der **«Searching for …»-Screen** (Wartezustand) war unklar; offene Fragen zu **Zeit-/Terminangabe** und **Vorab-Planung/Buchung**.
   - **Neue Ideen/Anforderungen:** In «Need» die Einträge zuerst anzeigen; **Karma-Punkte**; **Suche via Karte** mit aktuell offenen Aufgaben.
 
-> **Hinweis (Ehrlichkeit der Daten):** Die quantitativen Felder (Skala 1–10 zur Bedienbarkeit, Issue-/Schweregrad-Tabelle, Erfolgsquote/Zeitbedarf) wurden im Test nicht vollständig ausgefüllt und werden hier daher nicht als Kennzahlen ausgewiesen. Grundlage sind die qualitativen Feedback-Grids beider Testpersonen.
+
 
 - **Zusammenfassung der Resultate:** Beide Testpersonen verstanden die Grundidee und die Trennung in Need/Give; die Skill-Auswahl und das Accept/Decline-/Rating-Prinzip kamen gut an. Die wichtigsten Schwachstellen liegen beim **Status-/Wartescreen («Searching for»)**, bei der fehlenden **Karten-/Standort-Integration** und beim Wunsch nach **Profil/Account** sowie einem sichtbareren **Bewertungs-/Karma-System**.
 - **Abgeleitete Verbesserungen (priorisiert):**
