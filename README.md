@@ -229,10 +229,13 @@ Die Doku wurde erstellt, indem die eigenen Artefakte (PDFs der Abgaben, Skizzen,
 - **Quellen / Assets:**
   - Figma-Prototyp (getestet): <https://www.figma.com/proto/b8ncFxcTipBZwTg0Qd4Zen/Helpadar?node-id=1-3265&starting-point-node-id=1%3A3265>
   - Figma-Community-Datei (Quelle/Vorlage): <https://www.figma.com/community/file/1631066429495712411>
+- **Skizzen (Sketch-Phase):** Originalskizzen unter [`docs/sketches/`](docs/sketches/) (Kontext und Beschreibung in Kap. 3.2).
 - **Testskript & Materialien:** Testleiterdokument (Szenario-Aufgaben, Feedback-Grid, Nachbefragung) – Vorlage für beide Tests.
-- **Rohdaten/Auswertung:** Ausgefüllte Testleiterdokumente vom 20.05.2026: `Hilfadar_Usability_Test-Sandro.docx` und `Hilfadar_Usability_Test-Kanita.docx` (Prototyp v1.0).
+- **Rohdaten / Auswertung:** Ausgefüllte Testleiterdokumente vom 20.05.2026 (Prototyp v1.0):
+  - [Hilfadar_Usability_Test-Sandro.docx](docs/usability-test/Hilfadar_Usability_Test-Sandro.docx)
+  - [Hilfadar_Usability_Test-Kanita.docx](docs/usability-test/Hilfadar_Usability_Test-Kanita.docx)
 
-> **Noch einzufügen:** (1) Original-Skizzen und die beiden Testdokumente ins Repository legen (z. B. unter `docs/`) und hier verlinken. (2) Lizenzhinweise zu verwendeten Icons/Schriften/Assets ergänzen.
+> **Noch einzufügen:** Lizenzhinweise zu verwendeten Icons / Schriften / Assets ergänzen.
 
 ## 8. Selbst-Check: Erfüllung der Vorgaben
 
@@ -279,7 +282,7 @@ In dieser Reihenfolge empfohlen:
 
 1. **Screenshots der fertigen App** (Need-Einstieg, Match-Screen, Order-done, Give-Flow) in Kap. 3.3/3.4.1 einfügen – laut Raster Pflicht.
 2. **Video** (~5 Min, max. 10 Min): kommentierter Walkthrough aller Workflows; ohne Code- oder Vorgehens-Teil.
-3. **Testdokumente** `Hilfadar_Usability_Test-Sandro.docx` und `Hilfadar_Usability_Test-Kanita.docx` (idealerweise mit vervollständigten Feldern) ins Repo legen (z. B. unter `docs/`) und in Kap. 7 verlinken; Original-Skizzen ebenfalls ablegen.
+3. **Testdokumente und Skizzen ablegen:** `Hilfadar_Usability_Test-Sandro.docx` und `Hilfadar_Usability_Test-Kanita.docx` in den vorbereiteten Ordner [`docs/usability-test/`](docs/usability-test/) legen; Original-Skizzen analog in [`docs/sketches/`](docs/sketches/).
 4. **Evaluation vervollständigen:** Quantitative Felder der Testleiterdokumente (Skala 1–10, Issue-/Schweregrad-Tabelle, Zusammenfassung/Handlungsempfehlungen) nachtragen.
 5. **Lizenzhinweise** zu verwendeten Icons/Schriften/Assets im Anhang (Kap. 7) ergänzen.
 6. **KI-Deklaration prüfen:** allfällige weitere KI-Tools (z. B. für Code) in Kap. 6.1 deklarieren.
